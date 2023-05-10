@@ -59,7 +59,6 @@ app.post('/register', async (req, res) => {
 
 app.post('/login', async (req, res) => {
   try {
-    // TODO: Retrieve the user object from a database based on the username
 
     // Check if the password is correct
     const passwordMatch = await bcrypt.compare(req.body.password, user.password);
