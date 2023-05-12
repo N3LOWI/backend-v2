@@ -11,6 +11,13 @@ const AlumSchema = new mongoose.Schema({
         type: String,
         maxlength: 40
     },
+    /*
+    curso: {
+        required: true,
+        type: String,
+        maxlength: 40
+    },
+    */
     dni: {
         required: true,
         type: String,
