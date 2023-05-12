@@ -7,11 +7,12 @@ module.exports = router;
 
 
 //Post Method
-router.post('/post', async (req, res) => {
+router.post('/postAlum', async (req, res) => {
     const data = new Model({
         //here to edit registros
-        name: req.body.name,
-        age: req.body.age
+        nombre: req.body.nombre,
+        apellido: req.body.apellido,
+        dni: req.body.dni
     })
 
     try {
@@ -19,35 +20,36 @@ router.post('/post', async (req, res) => {
         res.status(200).json(dataToSave)
     }
     catch (error) {
-        res.status(400).json({message: error.message})
+        res.status(400).json({ message: error.message })
     }
 })
 
 //Get all Method
-router.get('/getAll', async (req, res) => {
-    try{
+router.get('/getAlumAll', async (req, res) => {
+    try {
         const data = await Model.find();
         res.json(data)
     }
-    catch(error){
-        res.status(500).json({message: error.message})
+    catch (error) {
+        res.status(500).json({ message: error.message })
     }
 })
 
 //Get by ID Method
-router.get('/getOne/:id', async (req, res) => {
-    try{
+router.get('/getAlum/:id', async (req, res) => {
+    try {
         const data = await Model.findById(req.params.id);
         res.json(data)
     }
-    catch(error){
-        res.status(500).json({message: error.message})
+    catch (error) {
+        res.status(500).json({ message: error.message })
     }
 })
 
 //Update by ID Method
-router.patch('/update/:id', async (req, res) => {
+router.patch('/patchAlum/:id', async (req, res) => {
     try {
+        /*
         const id = req.params.id;
         const updatedData = req.body;
         const options = { new: true };
@@ -55,6 +57,19 @@ router.patch('/update/:id', async (req, res) => {
         const result = await Model.findByIdAndUpdate(
             id, updatedData, options
         )
+        */
+
+        const id = req.params.id;
+        const updates = {};
+
+        for (const key of Object.keys(req.body)) {
+            if (req.body[key] !== '') {
+                updates[key] = req.body[key];
+            }
+        }
+
+        const options = { new: true };
+        const result = await Model.findByIdAndUpdate(id, updates, options);
 
         res.send(result)
     }
@@ -64,11 +79,11 @@ router.patch('/update/:id', async (req, res) => {
 })
 
 //Delete by ID Method
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/deleteAlum/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const data = await Model.findByIdAndDelete(id)
-        res.send(`Document with ${data.name} has been deleted..`)
+        res.send(`El alumno ${data.nombre} ha sido eliminado de la base de datos.`)
     }
     catch (error) {
         res.status(400).json({ message: error.message })

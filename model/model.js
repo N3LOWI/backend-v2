@@ -1,13 +1,20 @@
 const mongoose = require('mongoose');
 
 const dataSchema = new mongoose.Schema({
-    name: {
+    nombre: {
         required: true,
-        type: String
+        type: String,
+        maxlength: 40
     },
-    age: {
+    apellido: {
         required: true,
-        type: Number
+        type: String,
+        maxlength: 40
+    },
+    dni: {
+        required: true,
+        type: String,
+        maxlength: 9
     }
 })
 
