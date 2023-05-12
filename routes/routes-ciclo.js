@@ -7,16 +7,15 @@ module.exports = router;
 
 
 //Post Method
-router.post('/postProfe', async (req, res) => {
-    const data2 = new ModelProfe({
+router.post('/postCiclo', async (req, res) => {
+    const data = new ModelCiclo({
         //here to edit registros
         nombre: req.body.nombre,
-        apellido: req.body.apellido,
-        dni: req.body.dni
+        codigo: req.body.codigo
     })
 
     try {
-        const dataToSave = await data2.save();
+        const dataToSave = await data.save();
         res.status(200).json(dataToSave)
     }
     catch (error) {
@@ -25,9 +24,9 @@ router.post('/postProfe', async (req, res) => {
 })
 
 //Get all Method
-router.get('/getProfeAll', async (req, res) => {
+router.get('/getCicloAll', async (req, res) => {
     try {
-        const data = await ModelProfe.find();
+        const data = await ModelCiclo.find();
         res.json(data)
     }
     catch (error) {
@@ -36,9 +35,9 @@ router.get('/getProfeAll', async (req, res) => {
 })
 
 //Get by ID Method
-router.get('/getProfe/:id', async (req, res) => {
+router.get('/getCiclo/:id', async (req, res) => {
     try {
-        const data = await ModelProfe.findById(req.params.id);
+        const data = await ModelCiclo.findById(req.params.id);
         res.json(data)
     }
     catch (error) {
@@ -47,7 +46,7 @@ router.get('/getProfe/:id', async (req, res) => {
 })
 
 //Update by ID Method
-router.patch('/patchProfe/:id', async (req, res) => {
+router.patch('/patchCiclo/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const updates = {};
@@ -59,7 +58,7 @@ router.patch('/patchProfe/:id', async (req, res) => {
         }
 
         const options = { new: true };
-        const result = await ModelProfe.findByIdAndUpdate(id, updates, options);
+        const result = await ModelCiclo.findByIdAndUpdate(id, updates, options);
 
         res.send(result)
     }
@@ -69,11 +68,11 @@ router.patch('/patchProfe/:id', async (req, res) => {
 })
 
 //Delete by ID Method
-router.delete('/deleteProfe/:id', async (req, res) => {
+router.delete('/deleteCiclo/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        const data = await ModelProfe.findByIdAndDelete(id)
-        res.send(`El profesor ${data.nombre} ha sido eliminado de la base de datos.`)
+        const data = await ModelCiclo.findByIdAndDelete(id)
+        res.send(`El ciclo ${data.nombre} ha sido eliminado de la base de datos.`)
     }
     catch (error) {
         res.status(400).json({ message: error.message })
@@ -84,4 +83,4 @@ router.delete('/deleteProfe/:id', async (req, res) => {
 
 
 
-const ModelProfe = require('../model/model-profe');
+const ModelCiclo = require('../model/model-ciclo');

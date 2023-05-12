@@ -49,16 +49,6 @@ router.get('/getAlum/:id', async (req, res) => {
 //Update by ID Method
 router.patch('/patchAlum/:id', async (req, res) => {
     try {
-        /*
-        const id = req.params.id;
-        const updatedData = req.body;
-        const options = { new: true };
-
-        const result = await Model.findByIdAndUpdate(
-            id, updatedData, options
-        )
-        */
-
         const id = req.params.id;
         const updates = {};
 
@@ -95,10 +85,3 @@ router.delete('/deleteAlum/:id', async (req, res) => {
 
 
 const ModelAlum = require('../model/model-alum');
-
-router.post('/post', (req, res) => {
-    const data = new ModelAlum({
-        name: req.body.name,
-        age: req.body.age
-    })
-})

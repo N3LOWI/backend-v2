@@ -14,6 +14,7 @@ const profeSchema = new mongoose.Schema({
     dni: {
         required: true,
         type: String,
+        minlength: 9,
         maxlength: 9
     }
 });
