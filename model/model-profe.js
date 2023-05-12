@@ -1,14 +1,21 @@
 const mongoose = require('mongoose');
 
-const dataSchema2 = new mongoose.Schema({
-    name: {
+const profeSchema = new mongoose.Schema({
+    nombre: {
         required: true,
-        type: String
+        type: String,
+        maxlength: 40
     },
-    age: {
+    apellido: {
         required: true,
-        type: Number
+        type: String,
+        maxlength: 40
+    },
+    dni: {
+        required: true,
+        type: String,
+        maxlength: 9
     }
-})
+});
 
-module.exports = mongoose.model('Data2', dataSchema2)
+module.exports = mongoose.model('data2', profeSchema);

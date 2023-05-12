@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const app = express();
 
@@ -27,13 +28,11 @@ database.once('connected', () => {
     console.log('DATABASE CONNECTED !!!');
 })
 
-const routes = require('./routes/routes');
+const routesAlum = require('./routes/routes-alum');
+const routesProfe = require('./routes/routes-profe');
 
-app.use('/api', routes)
+app.use('/api', routesAlum);
+app.use('/api', routesProfe);
 
-
-
-
-//routes
-
+app.use(cors());
 

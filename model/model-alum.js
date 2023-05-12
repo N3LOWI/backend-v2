@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const dataSchema = new mongoose.Schema({
+const AlumSchema = new mongoose.Schema({
     nombre: {
         required: true,
         type: String,
@@ -18,4 +18,4 @@ const dataSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Data', dataSchema)
+module.exports = mongoose.model('data', AlumSchema)
