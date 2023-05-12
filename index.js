@@ -4,6 +4,14 @@ const cors = require('cors');
 
 const app = express();
 
+
+//Allow CORS from any website
+app.use(cors({
+    origin: '*'
+}));
+
+
+
 app.use(express.json());
 
 app.listen(3000, () => {
@@ -28,11 +36,17 @@ database.once('connected', () => {
     console.log('DATABASE CONNECTED !!!');
 })
 
+
+
 const routesAlum = require('./routes/routes-alum');
 const routesProfe = require('./routes/routes-profe');
 
 app.use('/api', routesAlum);
 app.use('/api', routesProfe);
 
-app.use(cors());
-
+/*
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*"); // allow requests from any origin
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});*/
