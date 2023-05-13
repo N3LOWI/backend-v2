@@ -39,7 +39,7 @@ const routesAlum = require('./routes/routes-alum');
 const routesProfe = require('./routes/routes-profe');
 const routesCiclo = require('./routes/routes-ciclo');
 const routesAsig = require('./routes/routes-asig');
-const routesCursp = require('./routes/routes-cursp');
+const routesCurso = require('./routes/routes-curso');
 
 app.use('/api', routesAlum);
 app.use('/api', routesProfe);
