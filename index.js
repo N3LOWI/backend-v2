@@ -40,9 +40,11 @@ const routesProfe = require('./routes/routes-profe');
 const routesCiclo = require('./routes/routes-ciclo');
 const routesAsig = require('./routes/routes-asig');
 const routesCurso = require('./routes/routes-curso');
+const routesNoti = require('./routes/routes-noti');
 
 app.use('/api', routesAlum);
 app.use('/api', routesProfe);
 app.use('/api', routesCiclo);
 app.use('/api', routesAsig);
 app.use('/api', routesCurso);
+app.use('/api', routesNoti);

@@ -7,10 +7,13 @@ module.exports = router;
 
 
 //Post Method
-router.post('/postAsig', async (req, res) => {
+router.post('/postNoti', async (req, res) => {
     const data = new ModelCiclo({
-        nombre: req.body.nombre,
-        codigo: req.body.codigo
+        titulo: req.body.titulo,
+        imagen: req.body.imagen,
+        cuerpo: req.body.cuerpo,
+        fecha: req.body.fecha,
+        autor: req.body.autor,
     })
 
     try {
@@ -23,7 +26,7 @@ router.post('/postAsig', async (req, res) => {
 })
 
 //Get all Method
-router.get('/getAsigAll', async (req, res) => {
+router.get('/getNotiAll', async (req, res) => {
     try {
         const data = await ModelCiclo.find();
         res.json(data)
@@ -34,7 +37,7 @@ router.get('/getAsigAll', async (req, res) => {
 })
 
 //Get by ID Method
-router.get('/getAsig/:id', async (req, res) => {
+router.get('/getNoti/:id', async (req, res) => {
     try {
         const data = await ModelCiclo.findById(req.params.id);
         res.json(data)
@@ -45,7 +48,7 @@ router.get('/getAsig/:id', async (req, res) => {
 })
 
 //Update by ID Method
-router.patch('/patchAsig/:id', async (req, res) => {
+router.patch('/patchNoti/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const updates = {};
@@ -67,11 +70,11 @@ router.patch('/patchAsig/:id', async (req, res) => {
 })
 
 //Delete by ID Method
-router.delete('/deleteAsig/:id', async (req, res) => {
+router.delete('/deleteNoti/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const data = await ModelCiclo.findByIdAndDelete(id)
-        res.send(`La asignatura ${data.nombre} ha sido eliminada de la base de datos.`)
+        res.send(`La noticia ${data.nombre} ha sido eliminada de la base de datos.`)
     }
     catch (error) {
         res.status(400).json({ message: error.message })
@@ -82,4 +85,4 @@ router.delete('/deleteAsig/:id', async (req, res) => {
 
 
 
-const ModelCiclo = require('../model/model-asig');
+const ModelCiclo = require('../model/model-noti');
