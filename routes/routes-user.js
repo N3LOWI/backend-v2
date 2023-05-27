@@ -60,7 +60,45 @@ router.put("/user/:id", passport.authenticate("jwt", { session: false }), async 
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
-  });
+});
+
+// Update user password
+router.put("/user/:id/change-password", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const { oldPassword, newPassword } = req.body;
+  
+      // Verificar si se proporcionó la contraseña antigua
+      if (!oldPassword) {
+        return res.status(400).json({ error: "Old password is required" });
+      }
+  
+      // Obtener el usuario de la base de datos
+      const user = await User.findById(userId);
+  
+      // Verificar la contraseña antigua
+      const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+  
+      if (!isPasswordValid) {
+        return res.status(401).json({ error: "Invalid old password" });
+      }
+  
+      // Generar un nuevo hash de la nueva contraseña
+      const salt = await bcrypt.genSalt(10);
+      const newHashedPassword = await bcrypt.hash(newPassword, salt);
+  
+      // Actualizar la contraseña del usuario en la base de datos
+      const updatedUser = await User.findByIdAndUpdate(userId, { password: newHashedPassword }, { new: true });
+  
+      if (updatedUser) {
+        return res.status(200).json(updatedUser);
+      } else {
+        return res.status(404).json({ error: "User not found" });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+});
   
   
 
