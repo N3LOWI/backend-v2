@@ -1,6 +1,8 @@
+require("dotenv").config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const passport = require("passport");
 
 const app = express();
 
@@ -11,6 +13,10 @@ app.use(cors({
 
 
 app.use(express.json());
+app.use(passport.initialize());
+
+// Passport configuration
+require("./config/passport")(passport);
 
 app.listen(3000, () => {
     console.log(`Server Started at ${3000}`)
@@ -41,6 +47,7 @@ const routesCiclo = require('./routes/routes-ciclo');
 const routesAsig = require('./routes/routes-asig');
 const routesCurso = require('./routes/routes-curso');
 const routesNoti = require('./routes/routes-noti');
+const routesUser = require('./routes/routes-user');
 
 app.use('/api', routesAlum);
 app.use('/api', routesProfe);
@@ -48,3 +55,4 @@ app.use('/api', routesCiclo);
 app.use('/api', routesAsig);
 app.use('/api', routesCurso);
 app.use('/api', routesNoti);
+app.use('/api', routesUser);
