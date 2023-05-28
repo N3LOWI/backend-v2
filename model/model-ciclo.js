@@ -4,13 +4,16 @@ const cicloSchema = new mongoose.Schema({
     nombre: {
         required: true,
         type: String,
-        maxlength: 40
     },
     codigo: {
         required: true,
         type: String,
         maxlength: 20
-    }
+    },
+    cursos: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Curso' // referencia a documentos de cursos
+    }]
 });
 
-module.exports = mongoose.model('data3', cicloSchema);
+module.exports = mongoose.model('Ciclo', cicloSchema);

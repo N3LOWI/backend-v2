@@ -80,8 +80,59 @@ router.delete('/deleteProfe/:id', async (req, res) => {
     }
 })
 
+// Endpoint GET /api/subjects
+router.get('/subjects', (req, res) => {
+    // Simulación de los subjects obtenidos desde una base de datos o cualquier otra fuente de datos
+    const subjects = ['Matemáticas', 'Física'];
+  
+    res.json(subjects);
+});
 
+// Endpoint para obtener estudiantes por materia y profesor
+router.get('/students/:teacherId/:subject', async (req, res) => {
+    const { teacherId, subject } = req.params;
+  
+    // Datos de ejemplo para pruebas
+    const mockData = [
+      {
+        "id": "student1",
+        "name": "John",
+        "surname": "Doe",
+        "className": "1A",
+        "attendancePercentage": 0.9
+      },
+      {
+        "id": "student2",
+        "name": "Jane",
+        "surname": "Smith",
+        "className": "1A",
+        "attendancePercentage": 0.1
+      },
+    ];
+  
+    res.json(mockData);
+});
 
-
+// Endpoint para obtener clases por materia y profesor
+router.get('/classes/:teacherId/:subject', async (req, res) => {
+    const { teacherId, subject } = req.params;
+  
+    // Datos de ejemplo para pruebas
+    const mockData = [
+    {
+        "id": "1",
+        "date": "2023-05-14",
+        "attendancePercentage": 0.85
+    },
+    {
+        "id": "2",
+        "date": "2023-05-13",
+        "attendancePercentage": 0.95
+    },
+    ];
+  
+    res.json(mockData);
+});
+  
 
 const ModelProfe = require('../model/model-profe');

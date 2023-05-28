@@ -10,7 +10,11 @@ const cursoSchema = new mongoose.Schema({
         required: true,
         type: String,
         maxlength: 20
-    }
+    },
+    asignaturas: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Asignatura' // referencia a documentos de asignaturas
+    }]
 });
 
-module.exports = mongoose.model('data5', cursoSchema);
+module.exports = mongoose.model('Curso', cursoSchema);

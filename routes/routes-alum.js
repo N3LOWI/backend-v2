@@ -1,28 +1,50 @@
 const express = require('express');
-
+const bcrypt = require("bcrypt");
 const router = express.Router()
-
+const User = require("../model/model-user");
+const Alumno = require("../model/model-alum");
 module.exports = router;
 
 
 
 //Post Method
 router.post('/postAlum', async (req, res) => {
-    const data = new ModelAlum({
-        //here to edit registros
-        nombre: req.body.nombre,
-        apellido: req.body.apellido,
-        dni: req.body.dni
-    })
-
     try {
-        const dataToSave = await data.save();
-        res.status(200).json(dataToSave)
+        const { nombre, apellido, dni, email } = req.body;
+
+        // Generar una contraseña de ejemplo
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash('password123', salt);
+
+        // Crear un nuevo usuario
+        const newUser = new User({
+            nombre: nombre,
+            apellido: apellido,
+            email: email,
+            password: hashedPassword,
+            rol: 'alumno'
+        });
+        const savedUser = await newUser.save();
+
+        const newAlumno = new Alumno({
+            nombre: nombre,
+            apellido: apellido,
+            dni: dni,
+            usuario: savedUser._id
+        });
+
+        const savedAlumno = await newAlumno.save();
+
+        // Actualizar el usuario con la referencia al alumno
+        savedUser.refId = savedAlumno._id;
+        await savedUser.save();
+
+        res.json(savedAlumno);
+    } catch (err) {
+        console.log(err)
+        res.status(500).send(err);
     }
-    catch (error) {
-        res.status(400).json({ message: error.message })
-    }
-})
+});
 
 //Get all Method
 router.get('/getAlumAll', async (req, res) => {
@@ -79,9 +101,5 @@ router.delete('/deleteAlum/:id', async (req, res) => {
         res.status(400).json({ message: error.message })
     }
 })
-
-
-
-
 
 const ModelAlum = require('../model/model-alum');

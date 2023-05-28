@@ -48,6 +48,7 @@ const routesAsig = require('./routes/routes-asig');
 const routesCurso = require('./routes/routes-curso');
 const routesNoti = require('./routes/routes-noti');
 const routesUser = require('./routes/routes-user');
+const routesAsis = require('./routes/routes-asistencias');
 
 app.use('/api', routesAlum);
 app.use('/api', routesProfe);
@@ -56,3 +57,4 @@ app.use('/api', routesAsig);
 app.use('/api', routesCurso);
 app.use('/api', routesNoti);
 app.use('/api', routesUser);
+app.use('/api', routesAsis);

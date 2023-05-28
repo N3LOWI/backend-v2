@@ -16,7 +16,15 @@ const profeSchema = new mongoose.Schema({
         type: String,
         minlength: 9,
         maxlength: 9
+    },
+    asignaturas: {
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Asignatura' }] // Define un arreglo de referencias a asignaturas
+    },
+    usuario: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Usuario', // referencia al documento de usuario
+        required: true
     }
 });
 
-module.exports = mongoose.model('data2', profeSchema);
+module.exports = mongoose.model('Profesor', profeSchema);
