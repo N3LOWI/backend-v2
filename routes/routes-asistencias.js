@@ -191,7 +191,9 @@ router.get('/classes/:subjectId', async (req, res) => {
 
   try {
     // Buscar el documento "asistencia" para el ID de asignatura especificado
-    const asistencia = await AsistenciaPorClase.find({ asignatura: subjectId});
+    const asistencia = await AsistenciaPorClase.find({ asignatura: subjectId})
+    .populate('asignatura', 'nombre') // Popula el campo "asignatura" con el nombre solamente
+    .populate('registros.alumno', 'nombre'); 
 
     if (!asistencia) {
       return res.status(404).json({ error: 'Asistencia no encontrada' });
