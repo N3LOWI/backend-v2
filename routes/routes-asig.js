@@ -1,7 +1,8 @@
 const express = require('express');
 
-const router = express.Router()
-
+const router = express.Router();
+const Asignatura = require("../model/model-asig");
+const Profesor = require("../model/model-profe");
 module.exports = router;
 
 
@@ -45,8 +46,9 @@ router.get('/getAsig/:id', async (req, res) => {
     }
 })
 
-//Update by ID Method
+// Update by ID Method
 router.patch('/patchAsig/:id', async (req, res) => {
+    console.log(req.body)
     try {
         const id = req.params.id;
         const updates = {};
@@ -60,12 +62,25 @@ router.patch('/patchAsig/:id', async (req, res) => {
         const options = { new: true };
         const result = await ModelCiclo.findByIdAndUpdate(id, updates, options);
 
-        res.send(result)
+        // Verificar si el campo 'profesor' ha sido actualizado
+        if (updates.profesor) {
+            // Obtener los IDs de las asignaturas que tenían al profesor anterior
+            const asignaturas = await Asignatura.find({ profesor: updates.profesor });
+            const asignaturasIds = asignaturas.map(asignatura => asignatura._id);
+
+            // Actualizar las asignaturas con el nuevo profesor
+            await Profesor.findByIdAndUpdate(updates.profesor, { asignaturas: asignaturasIds });
+        }
+
+        // Actualizar el profesor con los cambios en 'updates'
+        await ModelCiclo.findByIdAndUpdate(id, updates, options);
+
+        res.send(result);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
     }
-    catch (error) {
-        res.status(400).json({ message: error.message })
-    }
-})
+});
+
 
 //Delete by ID Method
 router.delete('/deleteAsig/:id', async (req, res) => {
