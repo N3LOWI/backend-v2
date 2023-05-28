@@ -22,7 +22,7 @@ const AsistenciaPorAlumnoSchema = new mongoose.Schema({
                 required: true
             },
             asistio: {
-                type: Boolean,
+                type: Number,
                 default: false
             }
         }]

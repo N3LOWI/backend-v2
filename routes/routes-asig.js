@@ -10,7 +10,8 @@ module.exports = router;
 router.post('/postAsig', async (req, res) => {
     const data = new ModelCiclo({
         nombre: req.body.nombre,
-        codigo: req.body.codigo
+        codigo: req.body.codigo,
+        horas: req.body.horas
     })
 
     try {

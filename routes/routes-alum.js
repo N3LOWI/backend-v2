@@ -22,7 +22,7 @@ router.post('/postAlum', async (req, res) => {
             apellido: apellido,
             email: email,
             password: hashedPassword,
-            rol: 'alumno'
+            rol: 'student'
         });
         const savedUser = await newUser.save();
 

@@ -4,7 +4,8 @@ const AsistenciaPorAsignaturaSchema = new mongoose.Schema({
     asignatura: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Asignatura',
-        required: true
+        required: true,
+        unique: true,
     },
     registros: [{
         alumno: {
@@ -13,12 +14,16 @@ const AsistenciaPorAsignaturaSchema = new mongoose.Schema({
             required: true
         },
         faltas: [{
-            fechaHora: {
+            fecha: {
                 type: Date,
                 required: true
             },
+            hora: {
+                type: String,
+                required: true
+            },
             asistio: {
-                type: Boolean,
+                type: Number,
                 default: false
             }
         }]

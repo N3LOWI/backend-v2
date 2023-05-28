@@ -12,6 +12,10 @@ const asigSchema = new mongoose.Schema({
         type: String,
         maxlength: 20
     },
+    horas: {
+        required: true,
+        type: Number,
+    },
     profesor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Profesor', // referencia a un documento de profesor
