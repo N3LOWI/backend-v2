@@ -295,6 +295,36 @@ router.get('/student/attendance/:id', async (req, res) => {
   }
 });
 
+// Endpoint para obtener las asistencias de un alumno
+router.get('/student/attendance2/:id', async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    // Buscar AsistenciaPorAlumno por el campo refId del usuario
+    const asistencias = await AsistenciaPorAlumno.find({ alumno: userId })
+      .populate('registros.asignatura', 'nombre horas');
+
+    console.log(asistencias);
+    if (!asistencias) {
+      return res.status(404).json({ error: 'Asistencias no encontradas' });
+    }
+
+    // Añadir la propiedad "horas" dentro de cada asignatura en los registros de asistencias
+    asistencias.forEach(asistencia => {
+      asistencia.registros.forEach(registro => {
+        registro.asignatura = {
+          ...registro.asignatura._doc,
+          horas: registro.asignatura.horas
+        };
+      });
+    });
+
+    res.json(asistencias);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener las asistencias del alumno' });
+  }
+});
+
 
 
 module.exports = router;
